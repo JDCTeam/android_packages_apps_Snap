@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2009 The Android Open Source Project
  * Copyright (C) 2013-2015 The CyanogenMod Project
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -769,15 +769,18 @@ public class CameraSettings {
     }
 
     private static List<String> getSupportedZoomLevel(Parameters params) {
+	Log.d(TAG, "RUNNING THE CUSTOM SNAP");
         ArrayList<String> supported = new ArrayList<String>();
         int zoomMaxIdx = params.getMaxZoom();
         List <Integer>  zoomRatios = params.getZoomRatios();
-        int zoomMax = zoomRatios.get(zoomMaxIdx)/100;
-
-        for (int zoomLevel = 0; zoomLevel <= zoomMax; zoomLevel++) {
-            supported.add(String.valueOf(zoomLevel));
-        }
-        return supported;
+ 	if (zoomRatios != null) {
+        	int zoomMax = zoomRatios.get(zoomMaxIdx)/100;
+        	for (int zoomLevel = 0; zoomLevel <= zoomMax; zoomLevel++) {
+            		supported.add(String.valueOf(zoomLevel));
+        	}
+	}
+	return supported;
+	
     }
 
     private static ListPreference removeLeadingISO(ListPreference pref) {
