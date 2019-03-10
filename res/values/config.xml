@@ -76,4 +76,8 @@
 
     <!-- Enable support for bokeh mode -->
     <bool name="support_bokeh_mode">false</bool>
+
+    <!-- Decode YV16 format on Samsung HDR hardware -->
+    <bool name="needsSamsungHDRFormat">true</bool>
+
 </resources>
