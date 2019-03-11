@@ -1380,7 +1380,7 @@ FocusOverlayManager.Listener,
             }
 
             @Override
-            public void onPictureTaken(byte[] jpegData, CameraProxy camera) {
+            public void onPictureTaken(final byte[] jpegData, CameraProxy camera) {
                 String focusMode;
 
                 mUI.stopSelfieFlash();
@@ -1528,6 +1528,7 @@ FocusOverlayManager.Listener,
                         out.close();
                     } catch (Exception e) {}
                 }
+                //byte [] jpegData_;
                 if (!mRefocus || (mRefocus && mReceivedSnapNum == 7)) {
                     int orientation = Exif.getOrientation(exif);
                     if (mCameraId == CameraHolder.instance().getFrontCameraId()) {
@@ -1535,8 +1536,8 @@ FocusOverlayManager.Listener,
                             .findPreference(CameraSettings.KEY_SELFIE_MIRROR);
                         if (selfieMirrorPref != null && selfieMirrorPref.getValue() != null &&
                             selfieMirrorPref.getValue().equalsIgnoreCase("enable")) {
-                            jpegData = flipJpeg(jpegData, info.orientation, orientation);
-                            jpegData = addExifTags(jpegData, orientation);
+                            //jpegData_ = flipJpeg(jpegData, info.orientation, orientation);
+                            //jpegData_ = addExifTags(jpegData_, orientation);
                         }
                     }
                     if (!mIsImageCaptureIntent) {
@@ -1606,12 +1607,12 @@ FocusOverlayManager.Listener,
 
                             if (isSamsungHDR) {
                                 final long finalDate = date;
-                                final byte[] jpegData_ = jpegData;
+                                Log.d(TAG, "CAPTURING WITH SAMSUNG HDR~~~~~~~~~~~~~");
                                 new Thread(new Runnable() {
                                     public void run() {
                                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                                        Bitmap bm = CameraUtil.decodeYUV422P(jpegData_, width, height);
+                                        Bitmap bm = CameraUtil.decodeYUV422P(jpegData, width, height);
                                         if (mJpegRotation != 0) {
                                             Matrix matrix = new Matrix();
                                             matrix.postRotate(mJpegRotation);
